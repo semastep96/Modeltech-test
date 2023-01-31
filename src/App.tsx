@@ -1,22 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Button } from 'primereact/button';
+import { Message } from 'primereact/message';
 import './App.css';
 import { FieldSheet } from './components/FieldSheet/FieldSheet';
-import { API } from './api/api';
+import { useAppDispatch, useAppSelector } from './hooks/storeHooks';
+import { fetchField } from './store/action_creators/fieldActions';
 
 export const App = () => {
   const fieldName = 'Северное';
-  const [info, setInfo] = useState<DayDynamic[] | undefined>(undefined);
+  const dispatch = useAppDispatch();
+  const { error, loading, daysDynamic } = useAppSelector(
+    (state) => state.field
+  );
 
-  useEffect(() => {
-    API.fetchFieldData(fieldName).then((response) => setInfo(response));
-  }, []);
+  const onFetchSheet: React.MouseEventHandler<HTMLButtonElement> = () => {
+    dispatch(fetchField(fieldName));
+  };
 
   return (
     <div className="App">
       <h1>Modeltech test by Semen Stepanov</h1>
-      <Button label="Fetch sheet" aria-label="fetch sheet" />
-      <FieldSheet info={info} fieldName={fieldName} />
+      <Button
+        label="Fetch sheet"
+        aria-label="fetch sheet"
+        onClick={onFetchSheet}
+      />
+      {error && <Message severity="error" text={error} />}
+      <FieldSheet info={daysDynamic} fieldName={fieldName} loading={loading} />
     </div>
   );
 };

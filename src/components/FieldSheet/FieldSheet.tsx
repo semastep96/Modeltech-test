@@ -6,14 +6,22 @@ import './FieldSheet.css';
 interface FieldSheetProps {
   info: DayDynamic[] | undefined;
   fieldName: string;
+  loading: boolean;
 }
 
-export const FieldSheet: FC<FieldSheetProps> = ({ info, fieldName }) => {
-  const sheetHeader = `Месторождение «${fieldName}»`;
+export const FieldSheet: FC<FieldSheetProps> = ({
+  info,
+  fieldName,
+  loading,
+}) => {
+  const sheetHeader = info?.length
+    ? `Месторождение «${fieldName}»`
+    : 'Загрузите данные';
+
   return (
     <div className="fieldSheet">
       <DataTable
-        header={sheetHeader}
+        header={loading ? 'Загрузка...' : sheetHeader}
         value={info}
         size={'normal'}
         responsiveLayout="scroll"

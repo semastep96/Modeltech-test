@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 if (process.env.NODE_ENV === 'development') {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -18,7 +20,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );
 

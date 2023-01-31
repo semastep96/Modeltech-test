@@ -5,7 +5,7 @@ const ENDPOINTS = {
 
 export const API = {
   async fetchFieldData(name: string) {
-    const response = await fetch(`${API_URL}${ENDPOINTS.DYNAMIC}${name}a`, {
+    const response = await fetch(`${API_URL}${ENDPOINTS.DYNAMIC}${name}`, {
       headers: {
         'Content-Type': 'application/json',
       },
